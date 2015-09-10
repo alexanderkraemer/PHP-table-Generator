@@ -1,3 +1,10 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<style>
+    body{
+        margin:100px;
+    }
+</style>
+<meta charset="utf-8">
 <?php
     /**
      * Just quickly load all Classes by using an autoloader

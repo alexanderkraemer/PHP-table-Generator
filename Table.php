@@ -109,7 +109,7 @@ class Table
             $html .= '<th style="padding:7px;"><a href="http://' . $_SERVER['HTTP_HOST'] .
                      explode ( '?', $_SERVER['REQUEST_URI'] )[0] . $rule . '">
        <input style="height:20px; font-size:12px; padding-top:1px; border:2px solid red;" type="button"
-       class="btn btn-primary" value="Filter löschen">
+       class="btn btn-primary" value="clear Filter">
       </a></th>';
         }
         else
@@ -117,7 +117,7 @@ class Table
             $html
                 .= '<th style="padding:7px;"><input style="font-weight:bold; color:#ccc; height:20px; font-size:12px;
                    padding-top:1px; width:100%;"  
-                                type="button"  class="btn btn-primary" disabled value="Filter löschen"></th>';
+                                type="button"  class="btn btn-primary" disabled value="clear Filter"></th>';
         }
         /*
          * Hier werden die Spaltennamen in die Tabelle geschrieben
@@ -182,7 +182,7 @@ class Table
         $html
             .= '<td style="padding:7px; width:100px;"><input class="btn btn-primary pull-right"  style="height:34px; font-size:12px;
                    padding-top:4px; width:100%;" 
-                  type="submit" value="Suchen" ></td>';
+                  type="submit" value="Search" ></td>';
         foreach ( $this->columns as $columnName )
         {
             if ( ! empty( $columnName['name'] ) )
@@ -252,7 +252,7 @@ class Table
             {
                 $html .= '<td style="vertical-align:top; text-align:center;"><a href="' . $this->detailPage . '/' .
                          $daten->$prim . '">';
-                $html .= '<i class="fa fa-eye">Show</i>';
+                $html .= '<i class="glyphicon glyphicon-eye-open"></i>';
                 $html .= '</a></td>';
             }
             foreach ( $this->columns as $columnName )
@@ -266,11 +266,11 @@ class Table
         $html .= '<tr>';
         $html .= '<td style="border-right:0px;" colspan="' . ( count ( $this->columns ) + 1 ) . '">';
         $html .= $this->queryCount;
-        $html .= ' Datensätze';
+        $html .= ' Rows';
         $html .= '</td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td style="text-left; border-right:0px;" colspan="' . ( ( count ( $this->columns ) ) / 2 ) . '">';
+        $html .= '<td style="text-left; border-right:0px;" colspan="' . ( count ( $this->columns ) + 1 ) . '">';
         if ( ! isset( $_GET['pageNr'] ) OR $this->pageNr == 1 )
         {
             $prev = 1;
@@ -293,22 +293,18 @@ class Table
         {
             $string[] = $key . '=' . $value;
         }
-        $html .= '<a href="?pageNr=' . $prev . '&' . implode ( '&', $string ) .
-                 '" style="margin-left:20px; text-decoration:none;"><< Zurück</a>';
-        $html .= '</td>';
-        $html .= '<td style="text-align:right; border-left:0px;" colspan="' .
-                 round ( ( ( count ( $this->columns ) ) - ( ( count ( $this->columns ) ) / 2 ) ) ) . '">';
+        $html .= '<a class="pull-left" href="?pageNr=' . $prev . '&' . implode ( '&', $string ) .
+                 '" style="margin-left:20px; text-decoration:none;"><< Previous</a>';
         $string = array ();
         foreach ( $this->getParams () as $key => $value )
         {
             $string[] = $key . '=' . $value;
         }
-        $html .= '<a href="?pageNr=' . $next . '&' . implode ( '&', $string ) .
-                 '" style="margin-right:20px; text-decoration:none;">Weiter >></a>';
+        $html .= '<a class="pull-right" href="?pageNr=' . $next . '&' . implode ( '&', $string ) . '" style="margin-right:20px; text-decoration:none;">Next >></a>';
         $html .= '</td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td style="text-align:left; border-left:0px;" colspan="' . ( count ( $this->columns ) ) . '">';
+        $html .= '<td style="text-align:left; border-left:0px;" colspan="' . ( count ( $this->columns ) + 1 ) . '">';
         $html .= '<form method="GET">';
         $html .= '<select style="width:60px;" name="rowsPerPage" onchange="this.form.submit()">';
         $arrayRowsPerPage = array ( 10, 25, 50, 100, 200 );
@@ -343,11 +339,7 @@ class Table
         {
             $html .= '<input type="hidden" name="column" value="' . $_GET['column'] . '">';
         }
-        if ( isset( $this->rule ) AND ! empty( $this->rule ) )
-        {
-            $html .= '<input type="hidden" name="tab" value="gesprchsprotokoll">';
-        }
-        $html .= ' Einträge pro Seite';
+        $html .= ' rows per page';
         $html .= '</form>';
         //$html .= '</td>';
         //$html .= '<td colspan="'.(count($this->columns)-1).'">';
@@ -397,7 +389,7 @@ class Table
         {
             $html .= '<input type="hidden" name="tab" value="gesprchsprotokoll">';
         }
-        $html .= ' gehe zu Seite';
+        $html .= ' go to page';
         $html .= '</form>';
         $html .= '</td>';
         $html .= '</tr>';
