@@ -1,4 +1,4 @@
-# tableGenPHP
+# PHP-table-Generator
 A PHP Table Generator
 
 I couldn't find a table generator in the internet, that fit to my purposes.
